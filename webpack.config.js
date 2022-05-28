@@ -8,15 +8,16 @@ module.exports = {
         filename: 'bundle.js'
     },
     devServer: {
-        static: {
-            directory: path.join(__dirname, "dist"),
+        static: './dist',
+        devMiddleware: {
+          publicPath: '/assets/'
         },
-        compress: true,
-        port: 9000,
+        port: 8081,
     },
     module: {
-        rules: [{
-                test: /\.js&/,
+        rules: [
+            {
+                test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
@@ -24,6 +25,11 @@ module.exports = {
                         presets: ["@babel/preset-env"]
                     }
                 }
-        }]
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            }
+        ]
     }
 };
